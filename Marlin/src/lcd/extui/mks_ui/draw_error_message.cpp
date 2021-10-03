@@ -19,21 +19,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+
 #include "../../../inc/MarlinConfigPre.h"
 
 #if HAS_TFT_LVGL_UI
 
 #include "draw_ui.h"
 #include <lv_conf.h>
-
 #include "tft_lvgl_configuration.h"
-
 #include "SPI_TFT.h"
 #include "../../../inc/MarlinConfig.h"
-
-#if ENABLED(MKS_TEST)
-  #include "mks_hardware_test.h"
-#endif
+#include "mks_hardware.h"
 
 static lv_obj_t *scr;
 
