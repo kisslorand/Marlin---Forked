@@ -227,7 +227,8 @@
   #define FAN_PIN                           PB7   // Fan0
 #endif
 #ifndef FAN1_PIN
-  #define FAN1_PIN                          PB6   // Fan1
+  // #define FAN1_PIN                          PB6   // Fan1
+  #define FAN1_PIN                          HEATER_1_PIN   // Fan1
 #endif
 #ifndef FAN2_PIN
   #define FAN2_PIN                          PB5   // Fan2
