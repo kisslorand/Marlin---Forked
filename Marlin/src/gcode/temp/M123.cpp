@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -19,15 +19,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#pragma once
 
-#ifdef __cplusplus
-  extern "C" {
-#endif
+#include "../../inc/MarlinConfig.h"
 
-void lv_draw_acceleration_settings();
-void lv_clear_acceleration_settings();
+#if HAS_FANCHECK
 
-#ifdef __cplusplus
-  } /* C-declarations for C++ */
-#endif
+#include "../gcode.h"
+#include "../../feature/fancheck.h"
+
+/**
+ * M123: Report fan states -or- set interval for auto-report
+ *
+ *   S<seconds> : Set auto-report interval
+ */
+void GcodeSuite::M123() {
+
+  #if ENABLED(AUTO_REPORT_FANS)
+    if (parser.seenval('S')) {
+      fan_check.auto_reporter.set_interval(parser.value_byte());
+      return;
+    }
+  #endif
+
+  fan_check.print_fan_states();
+
+}
+
+#endif // HAS_FANCHECK

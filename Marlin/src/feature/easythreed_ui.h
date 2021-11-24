@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,13 +21,15 @@
  */
 #pragma once
 
-#ifdef __cplusplus
-  extern "C" {
-#endif
+class EasythreedUI {
+  public:
+    static void init();
+    static void run();
 
-void lv_draw_acceleration_settings();
-void lv_clear_acceleration_settings();
+  private:
+    static void blinkLED();
+    static void loadButton();
+    static void printButton();
+};
 
-#ifdef __cplusplus
-  } /* C-declarations for C++ */
-#endif
+extern EasythreedUI easythreed_ui;
