@@ -349,6 +349,10 @@
   #define WATCH_COOLER_TEMP_INCREASE            3 // Degrees Celsius
 #endif
 
+#if ANY(THERMAL_PROTECTION_HOTENDS, THERMAL_PROTECTION_BED, THERMAL_PROTECTION_CHAMBER, THERMAL_PROTECTION_COOLER)
+  #define THERMAL_PROTECTION_VARIANCE_MONITOR     // Detect a sensor malfunction preventing temperature updates
+#endif
+
 #if ENABLED(PIDTEMP)
   // Add an experimental additional term to the heater power, proportional to the extrusion speed.
   // A well-chosen Kc value should add just enough power to melt the increased material volume.
@@ -567,8 +571,8 @@
  *
  * USE_OCR2A_AS_TOP [undefined by default]
  *   Boards that use TIMER2 for PWM have limitations resulting in only a few possible frequencies on TIMER2:
- *   16MHz MCUs: [62.5KHz, 31.4KHz (default), 7.8KHz, 3.92KHz, 1.95KHz, 977Hz, 488Hz, 244Hz, 60Hz, 122Hz, 30Hz]
- *   20MHz MCUs: [78.1KHz, 39.2KHz (default), 9.77KHz, 4.9KHz, 2.44KHz, 1.22KHz, 610Hz, 305Hz, 153Hz, 76Hz, 38Hz]
+ *   16MHz MCUs: [62.5kHz, 31.4kHz (default), 7.8kHz, 3.92kHz, 1.95kHz, 977Hz, 488Hz, 244Hz, 60Hz, 122Hz, 30Hz]
+ *   20MHz MCUs: [78.1kHz, 39.2kHz (default), 9.77kHz, 4.9kHz, 2.44kHz, 1.22kHz, 610Hz, 305Hz, 153Hz, 76Hz, 38Hz]
  *   A greater range can be achieved by enabling USE_OCR2A_AS_TOP. But note that this option blocks the use of
  *   PWM on pin OC2A. Only use this option if you don't need PWM on 0C2A. (Check your schematic.)
  *   USE_OCR2A_AS_TOP sacrifices duty cycle control resolution to achieve this broader range of frequencies.
@@ -1616,6 +1620,11 @@
 
   // Add an optimized binary file transfer mode, initiated with 'M28 B1'
   //#define BINARY_FILE_TRANSFER
+
+  #if ENABLED(BINARY_FILE_TRANSFER)
+    // Include extra facilities (e.g., 'M20 F') supporting firmware upload via BINARY_FILE_TRANSFER
+    //#define CUSTOM_FIRMWARE_UPLOAD
+  #endif
 
   /**
    * Set this option to one of the following (or the board's defaults apply):
@@ -2690,6 +2699,7 @@
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
     //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
+    //#define X_HOLD_MULTIPLIER 0.5    // Enable to override 'HOLD_MULTIPLIER' for the X axis
   #endif
 
   #if AXIS_IS_TMC(X2)
@@ -2699,6 +2709,7 @@
     #define X2_RSENSE         0.11
     #define X2_CHAIN_POS     -1
     //#define X2_INTERPOLATE true
+    //#define X2_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(Y)
@@ -2708,6 +2719,7 @@
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1
     //#define Y_INTERPOLATE  true
+    //#define Y_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(Y2)
@@ -2717,6 +2729,7 @@
     #define Y2_RSENSE         0.11
     #define Y2_CHAIN_POS     -1
     //#define Y2_INTERPOLATE true
+    //#define Y2_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(Z)
@@ -2726,6 +2739,7 @@
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
     //#define Z_INTERPOLATE  true
+    //#define Z_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(Z2)
@@ -2735,6 +2749,7 @@
     #define Z2_RSENSE         0.11
     #define Z2_CHAIN_POS     -1
     //#define Z2_INTERPOLATE true
+    //#define Z2_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(Z3)
@@ -2744,6 +2759,7 @@
     #define Z3_RSENSE         0.11
     #define Z3_CHAIN_POS     -1
     //#define Z3_INTERPOLATE true
+    //#define Z3_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(Z4)
@@ -2753,6 +2769,7 @@
     #define Z4_RSENSE         0.11
     #define Z4_CHAIN_POS     -1
     //#define Z4_INTERPOLATE true
+    //#define Z4_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(I)
@@ -2762,6 +2779,7 @@
     #define I_RSENSE         0.11
     #define I_CHAIN_POS     -1
     //#define I_INTERPOLATE  true
+    //#define I_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(J)
@@ -2771,6 +2789,7 @@
     #define J_RSENSE         0.11
     #define J_CHAIN_POS     -1
     //#define J_INTERPOLATE  true
+    //#define J_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(K)
@@ -2780,6 +2799,7 @@
     #define K_RSENSE         0.11
     #define K_CHAIN_POS     -1
     //#define K_INTERPOLATE  true
+    //#define K_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E0)
@@ -2788,6 +2808,7 @@
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
     //#define E0_INTERPOLATE true
+    //#define E0_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E1)
@@ -2796,6 +2817,7 @@
     #define E1_RSENSE         0.11
     #define E1_CHAIN_POS     -1
     //#define E1_INTERPOLATE true
+    //#define E1_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E2)
@@ -2804,6 +2826,7 @@
     #define E2_RSENSE         0.11
     #define E2_CHAIN_POS     -1
     //#define E2_INTERPOLATE true
+    //#define E2_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E3)
@@ -2812,6 +2835,7 @@
     #define E3_RSENSE         0.11
     #define E3_CHAIN_POS     -1
     //#define E3_INTERPOLATE true
+    //#define E3_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E4)
@@ -2820,6 +2844,7 @@
     #define E4_RSENSE         0.11
     #define E4_CHAIN_POS     -1
     //#define E4_INTERPOLATE true
+    //#define E4_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E5)
@@ -2828,6 +2853,7 @@
     #define E5_RSENSE         0.11
     #define E5_CHAIN_POS     -1
     //#define E5_INTERPOLATE true
+    //#define E5_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E6)
@@ -2836,6 +2862,7 @@
     #define E6_RSENSE         0.11
     #define E6_CHAIN_POS     -1
     //#define E6_INTERPOLATE true
+    //#define E6_HOLD_MULTIPLIER 0.5
   #endif
 
   #if AXIS_IS_TMC(E7)
@@ -2844,6 +2871,7 @@
     #define E7_RSENSE         0.11
     #define E7_CHAIN_POS     -1
     //#define E7_INTERPOLATE true
+    //#define E7_HOLD_MULTIPLIER 0.5
   #endif
 
   /**
@@ -2947,23 +2975,26 @@
    * Define your own with:
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-  #define CHOPPER_TIMING CHOPPER_DEFAULT_24V
-  //#define CHOPPER_TIMING_X  CHOPPER_DEFAULT_12V   // For X Axes (override below)
-  //#define CHOPPER_TIMING_X2 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_Y  CHOPPER_DEFAULT_12V   // For Y Axes (override below)
-  //#define CHOPPER_TIMING_Y2 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_Z  CHOPPER_DEFAULT_12V   // For Z Axes (override below)
-  //#define CHOPPER_TIMING_Z2 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_Z3 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_Z4 CHOPPER_DEFAULT_12V
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_24V        // All axes (override below)
+  //#define CHOPPER_TIMING_X  CHOPPER_TIMING        // For X Axes (override below)
+  //#define CHOPPER_TIMING_X2 CHOPPER_TIMING_X
+  //#define CHOPPER_TIMING_Y  CHOPPER_TIMING        // For Y Axes (override below)
+  //#define CHOPPER_TIMING_Y2 CHOPPER_TIMING_Y
+  //#define CHOPPER_TIMING_Z  CHOPPER_TIMING        // For Z Axes (override below)
+  //#define CHOPPER_TIMING_Z2 CHOPPER_TIMING_Z
+  //#define CHOPPER_TIMING_Z3 CHOPPER_TIMING_Z
+  //#define CHOPPER_TIMING_Z4 CHOPPER_TIMING_Z
+  //#define CHOPPER_TIMING_I  CHOPPER_TIMING
+  //#define CHOPPER_TIMING_J  CHOPPER_TIMING
+  //#define CHOPPER_TIMING_K  CHOPPER_TIMING
   #define CHOPPER_TIMING_E  CHOPPER_09STEP_24V      // For Extruders (override below)
-  //#define CHOPPER_TIMING_E1 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_E2 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_E3 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_E4 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_E5 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_E6 CHOPPER_DEFAULT_12V
-  //#define CHOPPER_TIMING_E7 CHOPPER_DEFAULT_12V
+  //#define CHOPPER_TIMING_E1 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E2 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E3 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E4 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E5 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E6 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E7 CHOPPER_TIMING_E
 
   /**
    * Monitor Trinamic drivers
@@ -3193,7 +3224,7 @@
     #define Z4_SLEW_RATE                 1
   #endif
 
-  #if AXIS_DRIVER_TYPE_I(L6470)
+  #if AXIS_IS_L64XX(I)
     #define I_MICROSTEPS      128
     #define I_OVERCURRENT    2000
     #define I_STALLCURRENT   1500
@@ -3202,7 +3233,7 @@
     #define I_SLEW_RATE         1
   #endif
 
-  #if AXIS_DRIVER_TYPE_J(L6470)
+  #if AXIS_IS_L64XX(J)
     #define J_MICROSTEPS      128
     #define J_OVERCURRENT    2000
     #define J_STALLCURRENT   1500
@@ -3211,7 +3242,7 @@
     #define J_SLEW_RATE         1
   #endif
 
-  #if AXIS_DRIVER_TYPE_K(L6470)
+  #if AXIS_IS_L64XX(K)
     #define K_MICROSTEPS      128
     #define K_OVERCURRENT    2000
     #define K_STALLCURRENT   1500
