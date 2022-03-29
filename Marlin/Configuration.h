@@ -610,9 +610,9 @@
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
     // Artillery SW X1
-    #define DEFAULT_Kp 27
+    #define DEFAULT_Kp 28.5
     #define DEFAULT_Ki 3.7
-    #define DEFAULT_Kd 48
+    #define DEFAULT_Kd 57
   #endif
 #endif // PIDTEMP
 
