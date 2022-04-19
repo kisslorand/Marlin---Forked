@@ -158,7 +158,7 @@ extern "C" {
   #define TIMER_SERVO           TIM9  // TIMER_SERVO must be defined in this file
 #endif
 #ifndef TIMER_SERIAL
-  #define TIMER_SERIAL          TIM1  // TIMER_SERIAL must be defined in this file
+  #define TIMER_SERIAL          TIM7  // TIMER_SERIAL must be defined in this file
 #endif
 
 // UART Definitions
