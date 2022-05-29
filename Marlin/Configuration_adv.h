@@ -3938,7 +3938,7 @@
  *  - M206 and M428 are disabled.
  *  - G92 will revert to its behavior from Marlin 1.0.
  */
-//#define NO_WORKSPACE_OFFSETS
+// #define NO_WORKSPACE_OFFSETS
 
 // Extra options for the M114 "Current Position" report
 #define M114_DETAIL         // Use 'M114` for details to check planner calculations
@@ -4314,7 +4314,7 @@
 /**
  * WiFi Support (Espressif ESP32 WiFi)
  */
-//#define WIFISUPPORT         // Marlin embedded WiFi managenent
+// #define WIFISUPPORT         // Marlin embedded WiFi managenent
 // #define ESP3D_WIFISUPPORT   // ESP3D Library WiFi management (https://github.com/luc-github/ESP3DLib)
 
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
