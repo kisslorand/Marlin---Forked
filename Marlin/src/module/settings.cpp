@@ -3448,45 +3448,49 @@ void MarlinSettings::reset() {
 
       gcode.M420_report(forReplay);
 
-      #if ENABLED(MESH_BED_LEVELING)
+      #ifdef M503_MESH_DATA  // by Lori
 
-        if (leveling_is_valid()) {
-          LOOP_L_N(py, GRID_MAX_POINTS_Y) {
-            LOOP_L_N(px, GRID_MAX_POINTS_X) {
-              CONFIG_ECHO_START();
-              SERIAL_ECHOPGM("  G29 S3 I", px, " J", py);
-              SERIAL_ECHOLNPAIR_F_P(SP_Z_STR, LINEAR_UNIT(bedlevel.z_values[px][py]), 5);
+        #if ENABLED(MESH_BED_LEVELING)
+
+          if (leveling_is_valid()) {
+            LOOP_L_N(py, GRID_MAX_POINTS_Y) {
+              LOOP_L_N(px, GRID_MAX_POINTS_X) {
+                CONFIG_ECHO_START();
+                SERIAL_ECHOPGM("  G29 S3 I", px, " J", py);
+                SERIAL_ECHOLNPAIR_F_P(SP_Z_STR, LINEAR_UNIT(bedlevel.z_values[px][py]), 5);
+              }
+            }
+            CONFIG_ECHO_START();
+            SERIAL_ECHOLNPAIR_F("  G29 S4 Z", LINEAR_UNIT(bedlevel.z_offset), 5);
+          }
+
+        #elif ENABLED(AUTO_BED_LEVELING_UBL)
+
+          if (!forReplay) {
+            SERIAL_EOL();
+            bedlevel.report_state();
+            SERIAL_ECHO_MSG("Active Mesh Slot ", bedlevel.storage_slot);
+            SERIAL_ECHO_MSG("EEPROM can hold ", calc_num_meshes(), " meshes.\n");
+          }
+
+        //bedlevel.report_current_mesh();   // This is too verbose for large meshes. A better (more terse)
+                                            // solution needs to be found.
+
+        #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
+
+          if (leveling_is_valid()) {
+            LOOP_L_N(py, GRID_MAX_POINTS_Y) {
+              LOOP_L_N(px, GRID_MAX_POINTS_X) {
+                CONFIG_ECHO_START();
+                SERIAL_ECHOPGM("  G29 W I", px, " J", py);
+                SERIAL_ECHOLNPAIR_F_P(SP_Z_STR, LINEAR_UNIT(bedlevel.z_values[px][py]), 5);
+              }
             }
           }
-          CONFIG_ECHO_START();
-          SERIAL_ECHOLNPAIR_F("  G29 S4 Z", LINEAR_UNIT(bedlevel.z_offset), 5);
-        }
 
-      #elif ENABLED(AUTO_BED_LEVELING_UBL)
+        #endif
 
-        if (!forReplay) {
-          SERIAL_EOL();
-          bedlevel.report_state();
-          SERIAL_ECHO_MSG("Active Mesh Slot ", bedlevel.storage_slot);
-          SERIAL_ECHO_MSG("EEPROM can hold ", calc_num_meshes(), " meshes.\n");
-        }
-
-       //bedlevel.report_current_mesh();   // This is too verbose for large meshes. A better (more terse)
-                                           // solution needs to be found.
-
-      #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
-
-        if (leveling_is_valid()) {
-          LOOP_L_N(py, GRID_MAX_POINTS_Y) {
-            LOOP_L_N(px, GRID_MAX_POINTS_X) {
-              CONFIG_ECHO_START();
-              SERIAL_ECHOPGM("  G29 W I", px, " J", py);
-              SERIAL_ECHOLNPAIR_F_P(SP_Z_STR, LINEAR_UNIT(bedlevel.z_values[px][py]), 5);
-            }
-          }
-        }
-
-      #endif
+      #endif // M503_MESH_DATA  // by Lori
 
     #endif // HAS_LEVELING
 
