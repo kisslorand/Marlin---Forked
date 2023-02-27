@@ -672,6 +672,10 @@
   #error "EXPERIMENTAL_SCURVE is no longer needed and should be removed."
 #elif defined(BABYSTEP_ZPROBE_GFX_OVERLAY)
   #error "BABYSTEP_ZPROBE_GFX_OVERLAY is now BABYSTEP_GFX_OVERLAY."
+#elif defined(DISABLE_INACTIVE_E)
+  #error "DISABLE_INACTIVE_E is now set with DISABLE_INACTIVE_EXTRUDER."
+#elif defined(INVERT_X_STEP_PIN) || defined(INVERT_Y_STEP_PIN) || defined(INVERT_Z_STEP_PIN) || defined(INVERT_I_STEP_PIN) || defined(INVERT_J_STEP_PIN) || defined(INVERT_K_STEP_PIN) || defined(INVERT_U_STEP_PIN) || defined(INVERT_V_STEP_PIN) || defined(INVERT_W_STEP_PIN) || defined(INVERT_E_STEP_PIN)
+  #error "INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH."
 #endif
 
 // L64xx stepper drivers have been removed
@@ -3237,8 +3241,14 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE, "Movement bounds (X_MIN_POS, X_MAX_POS
 #if LCD_BACKLIGHT_TIMEOUT_MINS
   #if !HAS_ENCODER_ACTION
     #error "LCD_BACKLIGHT_TIMEOUT_MINS requires an LCD with encoder or keypad."
+  #elif ENABLED(NEOPIXEL_BKGD_INDEX_FIRST)
+    #if PIN_EXISTS(LCD_BACKLIGHT)
+      #error "LCD_BACKLIGHT_PIN and NEOPIXEL_BKGD_INDEX_FIRST are not supported at the same time."
+    #elif ENABLED(NEOPIXEL_BKGD_ALWAYS_ON)
+      #error "LCD_BACKLIGHT_TIMEOUT is not compatible with NEOPIXEL_BKGD_ALWAYS_ON."
+    #endif
   #elif !PIN_EXISTS(LCD_BACKLIGHT)
-    #error "LCD_BACKLIGHT_TIMEOUT_MINS requires LCD_BACKLIGHT_PIN."
+    #error "LCD_BACKLIGHT_TIMEOUT_MINS requires either LCD_BACKLIGHT_PIN or NEOPIXEL_BKGD_INDEX_FIRST."
   #endif
 #endif
 
