@@ -810,9 +810,9 @@
 #elif MB(BTT_SKR_SE_BX_V3)
   #include "stm32h7/pins_BTT_SKR_SE_BX_V3.h"    // STM32H7                                env:BTT_SKR_SE_BX
 #elif MB(BTT_SKR_V3_0)
-  #include "stm32h7/pins_BTT_SKR_V3_0.h"        // STM32H7                                env:STM32H743VI_btt env:STM32H723VG_btt
+  #include "stm32h7/pins_BTT_SKR_V3_0.h"        // STM32H7                                env:BIGTREE_SKR_3_743VI env:BIGTREE_SKR_3_723VG
 #elif MB(BTT_SKR_V3_0_EZ)
-  #include "stm32h7/pins_BTT_SKR_V3_0_EZ.h"     // STM32H7                                env:STM32H743VI_btt env:STM32H723VG_btt
+  #include "stm32h7/pins_BTT_SKR_V3_0_EZ.h"     // STM32H7                                env:BIGTREE_SKR_3_743VI env:BIGTREE_SKR_3_723VG
 #elif MB(BTT_OCTOPUS_MAX_EZ_V1_0)
   #include "stm32h7/pins_BTT_OCTOPUS_MAX_EZ.h"  // STM32H7                                env:STM32H723ZE_btt
 #elif MB(TEENSY41)
