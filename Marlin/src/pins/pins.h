@@ -270,6 +270,10 @@
   #include "ramps/pins_PANOWIN_CUTLASS.h"           // ATmega2560                           env:mega2560ext
 #elif MB(KODAMA_BARDO)
   #include "ramps/pins_KODAMA_BARDO.h"              // ATmega2560                           env:mega2560ext
+#elif MB(XTLW_MFF_V1)
+  #include "ramps/pins_XTLW_MFF_V1.h"               // ATmega2560                           env:mega2560
+#elif MB(XTLW_MFF_V2)
+  #include "ramps/pins_XTLW_MFF_V2.h"               // ATmega2560                           env:mega2560
 
 //
 // RAMBo and derivatives
@@ -504,6 +508,8 @@
   #include "lpc1769/pins_BTT_SKR_E3_TURBO.h"        // LPC1769                              env:LPC1769
 #elif MB(FLY_CDY)
   #include "lpc1769/pins_FLY_CDY.h"                 // LPC1769                              env:LPC1769
+#elif MB(XTLW_CLIMBER_8TH_LPC)
+  #include "lpc1769/pins_XTLW_CLIMBER_8TH_LPC.h"    // LPC1769                              env:LPC1769
 
 //
 // Due (ATSAM) boards
@@ -751,9 +757,9 @@
 #elif MB(BTT_SKR_MINI_E3_V3_0_1)
   #include "stm32f4/pins_BTT_SKR_MINI_E3_V3_0_1.h"  // STM32F4                              env:STM32F401RC_btt env:STM32F401RC_btt_xfer
 #elif MB(BTT_SKR_V2_0_REV_A)
-  #include "stm32f4/pins_BTT_SKR_V2_0_REV_A.h"      // STM32F4                              env:BIGTREE_SKR_2 env:BIGTREE_SKR_2_USB env:BIGTREE_SKR_2_USB_debug
+  #include "stm32f4/pins_BTT_SKR_V2_0_REV_A.h"      // STM32F4                              env:STM32F407VG_btt env:STM32F407VG_btt_USB env:STM32F407VG_btt_USB_debug
 #elif MB(BTT_SKR_V2_0_REV_B)
-  #include "stm32f4/pins_BTT_SKR_V2_0_REV_B.h"      // STM32F4                              env:BIGTREE_SKR_2 env:BIGTREE_SKR_2_USB env:BIGTREE_SKR_2_USB_debug env:BIGTREE_SKR_2_F429 env:BIGTREE_SKR_2_F429_USB env:BIGTREE_SKR_2_F429_USB_debug
+  #include "stm32f4/pins_BTT_SKR_V2_0_REV_B.h"      // STM32F4                              env:STM32F407VG_btt env:STM32F407VG_btt_USB env:STM32F407VG_btt_USB_debug env:STM32F429VG_btt env:STM32F429VG_btt_USB env:STM32F429VG_btt_USB_debug
 #elif MB(BTT_OCTOPUS_V1_0)
   #include "stm32f4/pins_BTT_OCTOPUS_V1_0.h"        // STM32F4                              env:STM32F446ZE_btt env:STM32F446ZE_btt_usb_flash_drive
 #elif MB(BTT_OCTOPUS_V1_1)
@@ -828,6 +834,8 @@
   #include "stm32f4/pins_MELLOW_FLY_E3_V2.h"        // STM32F4                              env:FLY_E3_V2
 #elif MB(BLACKBEEZMINI_V1)
   #include "stm32f4/pins_BLACKBEEZMINI.h"           // STM32F4                              env:BLACKBEEZMINI_V1
+#elif MB(XTLW_CLIMBER_8TH)
+  #include "stm32f4/pins_XTLW_CLIMBER_8TH.h"        // STM32F4                              env:XTLW_CLIMBER_8TH
 
 //
 // ARM Cortex-M7
@@ -838,9 +846,9 @@
 #elif MB(NUCLEO_F767ZI)
   #include "stm32f7/pins_NUCLEO_F767ZI.h"           // STM32F7                              env:NUCLEO_F767ZI
 #elif MB(BTT_SKR_SE_BX_V2)
-  #include "stm32h7/pins_BTT_SKR_SE_BX_V2.h"        // STM32H7                              env:BTT_SKR_SE_BX
+  #include "stm32h7/pins_BTT_SKR_SE_BX_V2.h"        // STM32H7                              env:BIGTREE_SKR_SE_BX
 #elif MB(BTT_SKR_SE_BX_V3)
-  #include "stm32h7/pins_BTT_SKR_SE_BX_V3.h"        // STM32H7                              env:BTT_SKR_SE_BX
+  #include "stm32h7/pins_BTT_SKR_SE_BX_V3.h"        // STM32H7                              env:BIGTREE_SKR_SE_BX
 #elif MB(BTT_SKR_V3_0)
   #include "stm32h7/pins_BTT_SKR_V3_0.h"            // STM32H7                              env:BIGTREE_SKR_3_743VI env:BIGTREE_SKR_3_723VG
 #elif MB(BTT_SKR_V3_0_EZ)
