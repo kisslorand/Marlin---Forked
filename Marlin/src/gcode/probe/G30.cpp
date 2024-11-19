@@ -98,7 +98,8 @@ void GcodeSuite::G30() {
     restore_feedrate_and_scaling();
 
     // Move the nozzle to the position of the probe
-    do_blocking_move_to(probepos);
+    if (!seenX || !seenY)
+      do_blocking_move_to(probepos);
 
     if (raise_after == PROBE_PT_STOW)
       probe.move_z_after_probing();
